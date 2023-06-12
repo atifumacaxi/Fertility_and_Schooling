@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fertility.interface.graphics import one_country
 
 app = FastAPI()
 
@@ -8,5 +9,6 @@ def index():
     return {'HTTP': '200 - OK'}
 
 @app.get("/maps")
-def maps():
+def maps(country):
+    graphic = one_country(country)
     return 'Hi'
