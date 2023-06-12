@@ -1,6 +1,6 @@
-from fertility_and_schooling.ml_logic.data import clean_data
-from fertility_and_schooling.ml_logic.preprocessing import preprocessing_features
-from fertility_and_schooling.ml_logic.model import create_X_y, compile_model, initialize_model, train_model
+from Fertility_and_Schooling.ml_logic.data import clean_data
+from Fertility_and_Schooling.ml_logic.preprocessing import preprocessing_features
+from Fertility_and_Schooling.ml_logic.model import create_X_y, compile_model, initialize_model, train_model
 from sklearn.model_selection import train_test_split
 
 import pandas as pd
