@@ -1,4 +1,4 @@
-#from fertility.ml_logic import clean_data
+from fertility.ml_logic.data import load_data
 from fertility.ml_logic.preprocessing import preprocessing_features
 from fertility.ml_logic.model import create_X_y, compile_model, initialize_model, train_model
 from sklearn.model_selection import train_test_split
@@ -8,10 +8,7 @@ import numpy as np
 
 def preprocess_and_train():
 
-    #Loading schooling dataset
-    df_schooling = pd.read_csv('fertility/data/mean-years-of-schooling-long-run.csv', sep=';')
-    #Loading fertility dataset
-    df_fertility = pd.read_csv('fertility/data/fertility_rate.csv')
+    df_schooling, df_fertility = load_data()
 
     df = preprocessing_features(df_schooling, df_fertility)
 
