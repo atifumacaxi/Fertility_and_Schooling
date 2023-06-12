@@ -30,8 +30,10 @@ def preprocessing_features(df_schooling:pd.DataFrame, df_fertility:pd.DataFrame)
     #Merging both datasets into one, each row and column with their respective matching values
     df = df_fertility.merge(df_schooling, how='inner', on=('Country', 'Year'))
 
+    #Order by Year and Coutry, cause we are dealing with time series
     df = df.sort_values(['Year', 'Country'])
 
-    df = df[['Year', 'Country', 'Code', 'fertility', 'avg_years_of_schooling']]
+    # Select
+    df = df[['Year', 'Country', 'Code', 'fertility', 'avg_years_of_schooling']].copy()
 
     return df

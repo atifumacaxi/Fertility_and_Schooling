@@ -1,18 +1,27 @@
+from colorama import Fore, Style
+import time
+import pandas as pd
+import numpy as np
+from typing import Tuple
+
+print(Fore.BLUE + "\nLoading TensorFlow..." + Style.RESET_ALL)
+start = time.perf_counter()
+
 from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, SimpleRNN
 from tensorflow.keras.callbacks import EarlyStopping
 from keras import Model
 
-import pandas as pd
-import numpy as np
-from typing import Tuple
+end = time.perf_counter()
+print(f"\n✅ TensorFlow loaded ({round(end - start, 2)}s)")
 
 def preproc(data:pd.DataFrame) -> pd.DataFrame:
     '''
     Fines adjustments on dataset
     '''
     #Removing columns
-    data.drop(columns=['Unnamed: 0', 'Code'], inplace=True)
+    #data.drop(columns=['Unnamed: 0', 'Code'], inplace=True)
+    data.drop(columns='Code', inplace=True)
 
     #Ordering by year and set it as index
     data.sort_values('Year', inplace=True)
@@ -20,16 +29,13 @@ def preproc(data:pd.DataFrame) -> pd.DataFrame:
 
     return data
 
-#ml logic
-#api
-#interface
 
-
-def list_X_y(data:pd.DataFrame) -> list:
+def create_X_y(data:pd.DataFrame) -> Tuple[list, list]:
     '''
     Given a countries dataset, this function returns
     two lists of dataframes, ie., lists containing one dataframe per country.
     '''
+    data = preproc(data)
     countries = data.Country.unique().tolist()
 
     X = []
@@ -40,6 +46,7 @@ def list_X_y(data:pd.DataFrame) -> list:
     for country in countries:
         new_df = data[data['Country']==country][['fertility', 'avg_years_of_schooling']]
 
+        #This filter (34) is essential to keep our data normalized and standardized!
         if new_df.shape[0] == 34: #Considering only countries that has 34 samples (34 is the max number of samples)
             X.append(new_df.head(33))
             y.append(new_df['avg_years_of_schooling'].tail(1))
@@ -55,7 +62,7 @@ def list_X_y(data:pd.DataFrame) -> list:
     return X, y
 
 
-def initialize_model(input_shape: tuple) -> Model:
+def initialize_model(model: Model) -> Model:
     """
     Initialize the Neural Network
     """
@@ -95,7 +102,7 @@ def train_model(
     Fit the model and return a tuple (fitted_model, history)
     """
     es = EarlyStopping(
-        #monitor="val_loss",
+        monitor="val_loss",
         patience=patience,
         restore_best_weights=True,
         verbose=1
