@@ -3,6 +3,10 @@ import time
 import pandas as pd
 import numpy as np
 from typing import Tuple
+import pickle
+import os
+
+from fertility.params import *
 
 print(Fore.BLUE + "\nLoading TensorFlow..." + Style.RESET_ALL)
 start = time.perf_counter()
@@ -11,6 +15,7 @@ from tensorflow.keras import Sequential
 from tensorflow.keras.layers import Dense, SimpleRNN
 from tensorflow.keras.callbacks import EarlyStopping
 from keras import Model
+import tensorflow as tf
 
 end = time.perf_counter()
 print(f"\n✅ TensorFlow loaded ({round(end - start, 2)}s)")

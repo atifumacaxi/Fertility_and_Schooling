@@ -3,6 +3,8 @@ from fertility.ml_logic.preprocessing import preprocessing_features
 from fertility.ml_logic.model import create_X_y, compile_model, initialize_model, train_model
 from sklearn.model_selection import train_test_split
 
+from fertility.ml_logic.registry import save_model
+
 import pandas as pd
 import numpy as np
 
@@ -10,7 +12,10 @@ def preprocess_and_train():
 
     df_schooling, df_fertility = load_data()
 
-    df = preprocessing_features(df_schooling, df_fertility)
+    reshape_school = np.reshape(df_schooling)
+    reshape_fertility = np.reshape(df_fertility)
+
+    df = preprocessing_features(reshape_school, reshape_fertility)
 
     X, y = create_X_y(df)
 
@@ -27,6 +32,9 @@ def preprocess_and_train():
     val_mae = np.min(history.history['val_mae'])
 
     print("✅ preprocess_and_train() done")
+
+    save_model(model)
+
 
 if __name__ == '__main__':
     try:
