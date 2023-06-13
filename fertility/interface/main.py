@@ -12,10 +12,10 @@ def preprocess_and_train():
 
     df_schooling, df_fertility = load_data()
 
-    reshape_school = np.reshape(df_schooling)
-    reshape_fertility = np.reshape(df_fertility)
+    #reshape_school = np.reshape(df_schooling)
+    #reshape_fertility = np.reshape(df_fertility)
 
-    df = preprocessing_features(reshape_school, reshape_fertility)
+    df = preprocessing_features(df_schooling, df_fertility)
 
     X, y = create_X_y(df)
 

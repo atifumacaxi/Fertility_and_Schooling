@@ -20,7 +20,7 @@ def save_model(model: keras.Model = None) -> None:
     #filename = 'finalized_model.sav'
     #pickle.dump(model, open(filename, 'wb'))
 
-def load_model() -> keras.Model:
+def loads_model() -> keras.Model:
 
     print(Fore.BLUE + f"\nLoad latest model from local registry..." + Style.RESET_ALL)
 
