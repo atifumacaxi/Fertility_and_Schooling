@@ -2,15 +2,16 @@ import os
 import glob
 from fertility.params import *
 from tensorflow import keras
+import pandas as pd
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from fertility.ml_logic.registry import load_model
+from fertility.ml_logic.registry import loads_model
 
 app = FastAPI()
 
-app.state.model = load_model()
+app.state.model = loads_model()
 
 # Allowing all middleware is optional, but good practice for dev purposes
 app.add_middleware(
@@ -34,23 +35,26 @@ def maps(country):
 @app.get("/predict")
 def predict(value1:float, value2:float):
 
-    # model = app.state.model
-    # assert model is not None
+    model = app.state.model
+    assert model is not None
+
+    #X_pred = pd.DataFrame(locals(), index=[0])
 
     #Get the latest model version name by the timestamp on disk
-    local_model_directory = os.path.join(LOCAL_REGISTRY_PATH, "models")
-    local_model_paths = glob.glob(f"{local_model_directory}/*")
+    # local_model_directory = os.path.join(LOCAL_REGISTRY_PATH, "models")
+    # local_model_paths = glob.glob(f"{local_model_directory}/*")
 
-    if not local_model_paths:
-        return None
+    # if not local_model_paths:
+    #     return None
 
-    most_recent_model_path_on_disk = sorted(local_model_paths)[-1]
+    # most_recent_model_path_on_disk = sorted(local_model_paths)[-1]
 
     #print(Fore.BLUE + f"\nLoad latest model from disk..." + Style.RESET_ALL)
 
-    latest_model = keras.models.load_model(most_recent_model_path_on_disk)
-
-    pred = latest_model.predict([[[float(value1), float(value2)]]])
-    print(pred)
+    # latest_model = keras.models.load_model(most_recent_model_path_on_disk)
+    #print(X_pred)
+    print (len([[[value1, value2]]]))
+    #pred = model.predict([[[value1, value2]]])
+    #print(pred)
     #return int(pred[0])
     return 'hello'

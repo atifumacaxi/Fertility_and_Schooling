@@ -1,3 +1,3 @@
-from fertility.interface.main_local import preprocess_and_train
+from fertility.interface.main import preprocess_and_train
 
 preprocess_and_train()
