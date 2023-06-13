@@ -1,0 +1,10 @@
+# $CHA_BEGIN
+colorama
+numpy==1.23.5
+pandas==1.5.3
+
+fastapi
+uvicorn
+
+python-dotenv
+# $CHA_END
