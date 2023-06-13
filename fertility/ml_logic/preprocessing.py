@@ -3,10 +3,10 @@ import pandas as pd
 import numpy as np
 
 #Loading fertility dataset
-df_fertility = pd.read_csv('../raw_data/fertility_rate.csv')
+df_fertility = pd.read_csv('fertility/data/fertility_rate.csv')
 
 #Loading schooling dataset
-df_schooling = pd.read_csv('mean-years-of-schooling-long-run.csv', sep=';')
+df_schooling = pd.read_csv('fertility/data/mean-years-of-schooling-long-run.csv', sep=';')
 
 def preprocessing_features(df_schooling:pd.DataFrame, df_fertility:pd.DataFrame) -> pd.DataFrame:
     #Renaming "Entity" column to "Country" in the schooling dataset

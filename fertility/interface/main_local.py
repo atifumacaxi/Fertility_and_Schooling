@@ -1,19 +1,21 @@
-from Fertility_and_Schooling.ml_logic.data import clean_data
-from Fertility_and_Schooling.ml_logic.preprocessing import preprocessing_features
-from Fertility_and_Schooling.ml_logic.model import create_X_y, compile_model, initialize_model, train_model
+from fertility.ml_logic.data import load_data
+from fertility.ml_logic.preprocessing import preprocessing_features
+from fertility.ml_logic.model import create_X_y, compile_model, initialize_model, train_model
 from sklearn.model_selection import train_test_split
+
+from fertility.ml_logic.registry import save_model
 
 import pandas as pd
 import numpy as np
 
 def preprocess_and_train():
 
-    #Loading schooling dataset
-    df_schooling = pd.read_csv('mean-years-of-schooling-long-run.csv', sep=';')
-    #Loading fertility dataset
-    df_fertility = pd.read_csv('../data/fertility_rate.csv')
+    df_schooling, df_fertility = load_data()
 
-    df = preprocessing_features(df_schooling, df_fertility)
+    reshape_school = np.reshape(df_schooling)
+    reshape_fertility = np.reshape(df_fertility)
+
+    df = preprocessing_features(reshape_school, reshape_fertility)
 
     X, y = create_X_y(df)
 
@@ -21,6 +23,7 @@ def preprocess_and_train():
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, shuffle=False)
 
     # Train a model on the training set, using `model.py`
+    model = None
     model = initialize_model(model)
     model = compile_model(model)
     model, history = train_model(model, X_train, y_train)
@@ -29,6 +32,9 @@ def preprocess_and_train():
     val_mae = np.min(history.history['val_mae'])
 
     print("✅ preprocess_and_train() done")
+
+    save_model(model)
+
 
 if __name__ == '__main__':
     try:
