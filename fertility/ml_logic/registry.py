@@ -3,7 +3,7 @@ import os
 import glob
 
 from colorama import Fore, Style
-from fertility.params import *
+# from fertility.params import *
 from tensorflow import keras
 
 def save_model(model: keras.Model = None) -> None:

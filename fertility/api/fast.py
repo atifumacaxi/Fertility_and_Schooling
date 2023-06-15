@@ -1,17 +1,17 @@
 import os
 import glob
-from fertility.params import *
+# from fertility.params import *
 from tensorflow import keras
 import pandas as pd
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from fertility.ml_logic.registry import loads_model
+#from fertility.ml_logic.registry import loads_model
 
 app = FastAPI()
 
-app.state.model = loads_model()
+# app.state.model = loads_model()
 
 # Allowing all middleware is optional, but good practice for dev purposes
 app.add_middleware(
