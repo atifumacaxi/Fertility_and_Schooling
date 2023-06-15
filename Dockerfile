@@ -4,9 +4,8 @@ COPY requirements_prod.txt requirements.txt
 
 COPY fertility fertility
 COPY setup.py setup.py
-RUN pip install .
 
-#COPY Makefile Makefile
-#RUN make reset_local_files
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
 CMD uvicorn fertility.api.fast:app --host 0.0.0.0 --port $PORT
