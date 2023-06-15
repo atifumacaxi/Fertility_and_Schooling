@@ -1,4 +1,6 @@
 FROM python:3.10.6-buster
+EXPOSE 8080
+WORKDIR /prod
 
 COPY requirements_prod.txt requirements.txt
 
