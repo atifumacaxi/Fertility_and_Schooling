@@ -1,7 +1,7 @@
 import os
 import glob
 # from fertility.params import *
-from tensorflow import keras
+#from tensorflow import keras
 import pandas as pd
 
 from fastapi import FastAPI
